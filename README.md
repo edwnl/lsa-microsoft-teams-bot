@@ -11,6 +11,8 @@ LSA Bot is developed using Node.js, and uses webhooks to deliver the messages.
 1. The file `BSL.xlsx` is read, and class data is structured and stored in memory.
 2. Every 30 minutes, code is ran to check for scheduled classes within half an hour. A list of class happening will be reported to the teams channel.
    (More details about when the code is executed can be found at the bottom of `bot.js`)
+![windows_teams_msg](https://user-images.githubusercontent.com/19798018/185056341-2a42fe84-6285-4aa3-a415-a35f76e571d5.png)
+![ios_notification](https://user-images.githubusercontent.com/19798018/185056349-a24ee705-6a3c-4f65-ba57-e64780371740.png)
 
 ## Further Reading
 - dotenv: https://www.npmjs.com/package/dotenv
@@ -26,7 +28,7 @@ The LSA Bot is currently hosted on a US based Ubuntu server, using Process Manag
 - Clone the repository
 
     ```bash
-    git clone https://github.com/
+    git clone https://github.com/BySebt/LSA-Bot
     ```
 
 - Install modules
