@@ -1,7 +1,6 @@
 const cron = require('node-cron');
 
 const { getUpcomingClasses, loadSheet } = require('./utils/excel');
-const { LSA_CHANNELS } = require('./utils/globals');
 const { sendMessage } = require('./webhooks/teamsWebhook');
 const {
     getDate,
@@ -17,9 +16,21 @@ require('dotenv').config();
 // the bot (i.e. Excel Sheet), a manual restart is required.)
 const startDate = getDate(); // TODO: Dynamically load excel Sheet
 
+// LSA Zones, and their channel links
+const LSA_CHANNELS = {
+    HASS_Arts: process.env.HASS_ARTS,
+    HASS_BLE: process.env.HASS_BLE,
+    STEM: process.env.STEM,
+    Life_Sciences: process.env.LIFE_SCIENCES,
+    Southbank: process.env.SOUTHBANK
+};
+
 // Bot starting logic.
 log('Starting LSA Bot.');
-loadSheet(); // Loads the Excel sheet in directory.
+
+// Loads the Excel sheet in directory.
+if (!loadSheet()) return;
+
 log('LSA Bot is ready!');
 
 /**

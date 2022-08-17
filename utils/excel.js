@@ -6,7 +6,7 @@ const {
 } = require('./globals');
 const {
     findArea, parseTime, getDayIndex,
-    getDate
+    getDate, log
 } = require('./utils');
 
 // Matches 4 letters then 5 numbers.
@@ -22,13 +22,16 @@ const LSA_CLASS_DATA = {};
  */
 function loadSheet() {
     // Read the Excel file
-    if (process.env.EXCEL_FILE_NAME === undefined) {
-        log('Excel file path not found!');
-        return;
+    let workbook;
+    try {
+        workbook = XLSX.readFile(process.env.EXCEL_FILE_NAME);
+    } catch (e) {
+        log(`Something went wrong while opening the file! Path: ${process.env.EXCEL_FILE_NAME} Error: ${e}.`);
+        return false;
     }
-    const workbook = XLSX.readFile(process.env.EXCEL_FILE_NAME);
+
+    // Returns the index of DAYS to use. Default: 0.
     const dayIndex = getDayIndex();
-    if (dayIndex === undefined) return;
 
     DAYS.forEach(day => {
         // Check if the day tab exists.
@@ -69,6 +72,7 @@ function loadSheet() {
                 });
             });
     });
+    return true;
 }
 
 /**

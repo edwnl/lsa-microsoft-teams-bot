@@ -36,14 +36,6 @@ const LSA_AREAS = {
     ]
 };
 
-const LSA_CHANNELS = {
-    HASS_Arts: process.env.HASS_ARTS,
-    HASS_BLE: process.env.HASS_BLE,
-    STEM: process.env.STEM,
-    Life_Sciences: process.env.LIFE_SCIENCES,
-    Southbank: process.env.SOUTHBANK
-};
-
 const CLASS_TIME_RANGE_MS = 1.8e+6; // 1.8e+6 is 30 min in MS
 
-module.exports = { DAYS, LSA_AREAS, LSA_CHANNELS, CLASS_TIME_RANGE_MS };
+module.exports = { DAYS, LSA_AREAS, CLASS_TIME_RANGE_MS };

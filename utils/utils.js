@@ -72,7 +72,7 @@ function getDate() {
  */
 function getDayIndex() {
     const dayIndex = getDate().getDay() - 1;
-    return (dayIndex < 0 || dayIndex > DAYS.length) ? undefined : dayIndex;
+    return (dayIndex < 0 || dayIndex > DAYS.length) ? 0 : dayIndex;
 }
 
 /**
