@@ -1,7 +1,3 @@
-# Env and Excel
-.env
-*.xlsx
-
 # Logs
 logs
 *.log
@@ -129,3 +125,12 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Env
+*.env
+
+# Excel
+*.xlsx
+
+# .idea
+.idea/
