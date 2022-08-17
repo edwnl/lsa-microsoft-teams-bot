@@ -1,0 +1,33 @@
+{
+    "name": "lsabot",
+    "version": "1.0.0",
+    "description": "LSA Bot",
+    "author": "Edwin Li",
+    "license": "MIT",
+    "main": "bot.js",
+    "scripts": {
+        "start": "node bot.js && npm run lint --fix",
+        "watch": "../node_modules/.bin/nodemon bot.js",
+        "lint": "../node_modules/.bin/eslint . --fix",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com"
+    },
+    "dependencies": {
+        "axios": "^0.27.2",
+        "node-cron": "^3.0.2",
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.10/xlsx-0.18.10.tgz",
+        "dotenv": "^8.2.0"
+    },
+    "devDependencies": {
+        "eslint": "^7.0.0",
+        "eslint-config-standard": "^14.1.1",
+        "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
+        "nodemon": "~2.0.4"
+    }
+}
