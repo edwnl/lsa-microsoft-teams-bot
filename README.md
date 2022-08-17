@@ -3,7 +3,7 @@
 The University of Melbourne hosts Blended Synchronous Learning (BSL) Sessions, which are classes with participants attending both in person and online. 
 The setup for these classes is often complicated, and Learning Space Assistants (LSA) roam around BSL enabled rooms to help tutors with any technical issues.
 
-Given the Excel Spreadsheet containing all the BSL Sessions happening in a day, this bot will notify LSAs at least 10 minutes before a session happens, through a Microsoft Teams channel.
+Given the Excel Spreadsheet containing all the BSL Sessions happening in a day (Example: [EXAMPLE Timetable.xlsx](https://github.com/EdwinCRL/LSA-Bot/files/9357641/EXAMPLE.BSL.Timetable.xlsx)), this bot will notify LSAs at least 10 minutes before a session happens, through a Microsoft Teams channel.
 This simplifies and improves the accuracy of checking for classes as manual spreadsheet lookup is not needed, and human errors are reduced. (E.g. misreading, forgot to check, etc.)
 
 ## How it works
@@ -38,7 +38,7 @@ The LSA Bot is currently hosted on a US based Ubuntu server, using Process Manag
     npm install
     ```
 
-- Fill out the .env file with webhook links. (More info: https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook)
+- Create a file named `.env` in the root directory. Paste in the following, and fill in the webhook links as required. (More info: https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook)
   ```dotenv
    # Insert webhook links generated from a teams channel for each zone.
    HASS_ARTS=''
@@ -46,7 +46,11 @@ The LSA Bot is currently hosted on a US based Ubuntu server, using Process Manag
    STEM=''
    SOUTHBANK=''
    LIFE_SCIENCES=''
+   EXCEL_FILE_NAME='EXAMPLE BSL TIMETABLE.xlsx'
   ```
+  
+- Download the Example Excel File, and place it in the root directory: [EXAMPLE BSL Timetable.xlsx](https://github.com/EdwinCRL/LSA-Bot/files/9357641/EXAMPLE.BSL.Timetable.xlsx)
+
 - Start the bot
 
     ```bash
