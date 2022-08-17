@@ -29,7 +29,7 @@ The LSA Bot is currently hosted on a US based Ubuntu server, using Process Manag
 - Clone the repository
 
     ```bash
-    git clone https://github.com/BySebt/LSA-Bot.git
+    git clone https://github.com/EdwinCRL/LSA-Bot.git
     ```
 
 - Install modules
