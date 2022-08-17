@@ -1,6 +1,6 @@
 # Env and Excel
 .env
-BSL.xlsx
+*.xlsx
 
 # Logs
 logs

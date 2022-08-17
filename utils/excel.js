@@ -22,7 +22,11 @@ const LSA_CLASS_DATA = {};
  */
 function loadSheet() {
     // Read the Excel file
-    const workbook = XLSX.readFile('BSL.xlsx');
+    if (process.env.EXCEL_FILE_NAME === undefined) {
+        log('Excel file path not found!');
+        return;
+    }
+    const workbook = XLSX.readFile(process.env.EXCEL_FILE_NAME);
     const dayIndex = getDayIndex();
     if (dayIndex === undefined) return;
 
