@@ -40,7 +40,6 @@ function updateChannels() {
     for (const zone in LSA_CHANNELS) {
         // String representing the time range of classes.
         const timeString = getTimeRangeString();
-        log(`Updating Zone ${ zone } from ${ timeString }.`);
 
         // Retrieve the channel link for the Zone. Return if no link defined for Zone
         const link = LSA_CHANNELS[zone];
@@ -53,7 +52,7 @@ function updateChannels() {
         const classes = getUpcomingClasses(zone);
         if (classes.length === 0) continue;
 
-        log(`Announcing ${ classes.length } classes coming up in zone ${ zone }`);
+        log(`Announcing ${ classes.length } classes coming up in zone ${ zone }, from ${ timeString }.`);
 
         // Construct message for the LSA Zone Channel
         let text = `## Upcoming BSL Class${ (classes.length > 1 ? 'es' : '') }\n\n` +
@@ -62,13 +61,13 @@ function updateChannels() {
 
         classes.forEach(data => { text += `**${ data.time }** - ${ data.location } - ${ data.subject }\n\n`; });
 
-        text += 'ㅤ\n\n*Messages are sent every 5th and 35th minute of the hour, and' +
-                    'announces classes happening in the next 30 minutes.' +
+        text += 'ㅤ\n\n*Messages are sent every 5th and 35th minute of the hour, and ' +
+                    'announces classes happening in the next 30 minutes. ' +
                     'No message will be sent if no classes are scheduled.*' +
                     `\n\n*Excel data last updated: ${ startDate.toLocaleString() }*`;
 
         // Construct summary message for notifications. (e.g. 4 Science BSL Classes 1:00 PM - 1:30 PM)
-        const summary = `${ classes.length } ${ zone.replaceAll('_', ' ') }` +
+        const summary = `${ classes.length } ${ zone.replaceAll('_', ' ') } ` +
                         `BSL class${ (classes.length > 1 ? 'es' : '') } ${ timeString }\n\n`;
 
         // Send the message to teams

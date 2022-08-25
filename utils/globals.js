@@ -29,7 +29,8 @@ const LSA_AREAS = {
         '780 Elisabeth St'
     ],
     Southbank: [
-        'Southbank'
+        'Southbank',
+        'Sth'
     ],
     UNKNOWN: [
         'Swinburne'
