@@ -44,19 +44,34 @@ function loadSheet() {
             .forEach(line => {
                 // Trim valid class codes, and leave the rest
                 // Valid class code: e.g. ABCD10001
-                let subject = line.Subject;
+                let subject = line.Name;
+                if(subject === undefined) {
+                    log('ERROR: Subject column not found!')
+                    return;
+                }
+
                 const classCode = subject.substring(0, 9);
                 if (CLASS_CODE_REGEX.test(classCode)) subject = classCode;
 
                 // Remove PAR- for simplicity
-                const location = line['Allocated Location Name'].replaceAll('PAR-', '');
+                let location = line['Allocated Location Name'];
+                if(location === undefined) {
+                    log("Error: Location column not found!")
+                    return;
+                }
+                location = location.replaceAll('PAR-', '');
+
 
                 // Find the LSA Area based on the location name.
                 const area = findArea(location);
                 if (area === undefined) return;
 
                 // Find the starting time, and parse it to MS since UNIX.
-                const time = line['Start Time'];
+                const time = line['Scheduled Start Time'];
+                if(time === undefined) {
+                    log("Error: Start time column not found!")
+                    return;
+                }
                 const timeMS = parseTime(time, day).getTime();
 
                 // Create empty objects or arrays if they don't exist.
