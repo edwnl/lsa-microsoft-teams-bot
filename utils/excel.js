@@ -26,7 +26,7 @@ function loadSheet() {
     try {
         workbook = XLSX.readFile(process.env.EXCEL_FILE_NAME);
     } catch (e) {
-        log(`Something went wrong while opening the file! Path: ${process.env.EXCEL_FILE_NAME} Error: ${e}.`);
+        log(`[EXCEL] Something went wrong while opening the file! Path: ${process.env.EXCEL_FILE_NAME} Error: ${e}.`);
         return false;
     }
 
@@ -38,15 +38,19 @@ function loadSheet() {
         if (!(day in workbook.Sheets)) return;
         // Only load days after today (inclusive)
         if (DAYS.indexOf(day) < dayIndex) return;
+        
+        // For Debugging.
+        let class_counter = 0;
+        log(`[EXCEL] Reading classes on ${day}.`)
 
         XLSX.utils
             .sheet_to_json(workbook.Sheets[day]) // Convert the sheet to JSON
             .forEach(line => {
                 // Trim valid class codes, and leave the rest
                 // Valid class code: e.g. ABCD10001
-                let subject = line.Name;
+                let subject = line['Name'];
                 if(subject === undefined) {
-                    log('ERROR: Subject column not found!')
+                    log(`[EXCEL] ERROR: Subject column not found! ${JSON.stringify(line)}`)
                     return;
                 }
 
@@ -56,7 +60,7 @@ function loadSheet() {
                 // Remove PAR- for simplicity
                 let location = line['Allocated Location Name'];
                 if(location === undefined) {
-                    log("Error: Location column not found!")
+                    log(`[EXCEL] Error: Location column not found! ${JSON.stringify(line)}`)
                     return;
                 }
                 location = location.replaceAll('PAR-', '');
@@ -69,7 +73,7 @@ function loadSheet() {
                 // Find the starting time, and parse it to MS since UNIX.
                 const time = line['Scheduled Start Time'];
                 if(time === undefined) {
-                    log("Error: Start time column not found!")
+                    log(`[EXCEL] Error: Start time column not found! ${JSON.stringify(line)}`)
                     return;
                 }
                 const timeMS = parseTime(time, day).getTime();
@@ -79,13 +83,18 @@ function loadSheet() {
                 if (!(area in LSA_CLASS_DATA[day])) LSA_CLASS_DATA[day][area] = [];
 
                 // Inserting data into the LSA_CLASS_DATA object.
-                LSA_CLASS_DATA[day][area].push({
+                LSA_CLASS_DATA[day][area].push({ 
                     startMS: timeMS,
                     subject: subject,
                     time: time,
                     location: location
                 });
+                class_counter++;
             });
+
+            // For Debugging.
+            log(`[EXCEL] Total read classes on ${day}: ${class_counter}`)
+            class_counter = 0;
     });
     return true;
 }
