@@ -21,6 +21,7 @@ const LSA_AREAS = {
         'Metallurgy',
         'Redmond Barry',
         'Melbourne Connect',
+        'Sidney Myer Asia',
         'McCoy'
     ],
     Life_Sciences: [

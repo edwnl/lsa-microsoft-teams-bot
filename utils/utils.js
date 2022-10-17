@@ -100,6 +100,7 @@ function getDateObject(day) {
 /**
  * Given a time (e.g. 12:00 PM), and a day (e.g. Monday),
  * return a Date object.
+ * Time can also be given as a decimal (e.g 0.375 for 9am)
  * @param time Time in the format HH:MM [PM/AM]
  * @param day One of the days from {@link DAYS}
  * @returns {Date|undefined} Returns the date object
@@ -110,17 +111,24 @@ function parseTime(time, day) {
     // times[0] = HH, times[1] = MM.
     const times = [];
 
-    // Test to see if the time is valid.
-    if (!TIME_REGEX.test(time)) return undefined;
-
-    // Extract the hour and minute from time
-    time.slice(0, time.length - 3) // Remove AM / PM
+    // Test to see if the time is in HH:MM [AM/PM] Format
+    if (TIME_REGEX.test(time)) {
+        // Extract the hour and minute from time
+        time.slice(0, time.length - 3) // Remove AM / PM
         .split(':') // Split by semicolon
         .forEach(str => times.push(parseInt(str))); // Cast each number to Int
 
-    // Increase hours by 12 hours if PM is included.
-    if (time.toLowerCase().includes(' pm') && times[0] !== 12) {
-        times[0] += 12;
+        // Increase hours by 12 hours if PM is included.
+        if (time.toLowerCase().includes(' pm') && times[0] !== 12)
+            times[0] += 12;
+    } else if (time < 1) {
+        // Handles a decimal time.
+        const decimal = time * 24;
+        times[0] = Math.floor(decimal);
+        times[1] = (decimal % 1) * 60;
+    } else {
+        console.log(`ERROR: Time format incorrect. ${ time }`)
+        return undefined;
     }
 
     // Get the date object for the day.
@@ -150,10 +158,10 @@ function findArea(location) {
             return area;
         }
     }
-    log(`${ location } does not belong to an area!`);
+    log(`ERROR: ${ location } does not belong to an area!`);
     return undefined;
 }
 
 module.exports = {
-    findArea, parseTime, getDayIndex, getDate, log, getTimeRangeString
+    findArea, parseTime, getDayIndex, getDate, log, getTimeRangeString, getTimeString
 };

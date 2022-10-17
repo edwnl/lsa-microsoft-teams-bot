@@ -6,7 +6,7 @@ const {
 } = require('./globals');
 const {
     findArea, parseTime, getDayIndex,
-    getDate, log
+    getDate, log, getTimeString
 } = require('./utils');
 
 // Matches 4 letters then 5 numbers.
@@ -65,7 +65,6 @@ function loadSheet() {
                 }
                 location = location.replaceAll('PAR-', '');
 
-
                 // Find the LSA Area based on the location name.
                 const area = findArea(location);
                 if (area === undefined) return;
@@ -76,7 +75,7 @@ function loadSheet() {
                     log(`[EXCEL] Error: Start time column not found! ${JSON.stringify(line)}`)
                     return;
                 }
-                const timeMS = parseTime(time, day).getTime();
+                const date = parseTime(time, day);
 
                 // Create empty objects or arrays if they don't exist.
                 if (!(day in LSA_CLASS_DATA)) LSA_CLASS_DATA[day] = {};
@@ -84,9 +83,9 @@ function loadSheet() {
 
                 // Inserting data into the LSA_CLASS_DATA object.
                 LSA_CLASS_DATA[day][area].push({ 
-                    startMS: timeMS,
+                    startMS: date.getTime(),
                     subject: subject,
-                    time: time,
+                    time: getTimeString(date),
                     location: location
                 });
                 class_counter++;
